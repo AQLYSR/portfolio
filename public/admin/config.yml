@@ -1,0 +1,81 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Where uploaded media files are stored in the repo, and the public URL path
+# used to reference them from content files.
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "home"
+    label: "Home Page"
+    files:
+      - file: "src/content/home/index.json"
+        label: "Home Page Content"
+        name: "index"
+        fields:
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Primary Button Text", name: "primaryButtonText", widget: "string" }
+          - { label: "Primary Button Link", name: "primaryButtonLink", widget: "string", default: "/gallery" }
+          - { label: "Secondary Button Text", name: "secondaryButtonText", widget: "string" }
+          - { label: "Secondary Button Link", name: "secondaryButtonLink", widget: "string", default: "/contact" }
+          - { label: "Hero Image (large portrait photo)", name: "heroImage", widget: "image" }
+          - { label: "Hero Image Alt Text", name: "heroImageAlt", widget: "string", required: false }
+          - { label: "Side Image - Top (scenery photo)", name: "sideImageTop", widget: "image" }
+          - { label: "Side Image - Top Alt Text", name: "sideImageTopAlt", widget: "string", required: false }
+          - { label: "Side Image - Bottom (food photo)", name: "sideImageBottom", widget: "image" }
+          - { label: "Side Image - Bottom Alt Text", name: "sideImageBottomAlt", widget: "string", required: false }
+
+  - name: "about"
+    label: "About Page"
+    files:
+      - file: "src/content/about/index.json"
+        label: "About Page Content"
+        name: "index"
+        fields:
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Intro Line (e.g. Hi, I'm Aqil.)", name: "intro", widget: "string" }
+          - { label: "Paragraph 1", name: "paragraph1", widget: "text" }
+          - { label: "Paragraph 2", name: "paragraph2", widget: "text" }
+          - { label: "Button Text", name: "buttonText", widget: "string" }
+          - { label: "Photo", name: "photo", widget: "image" }
+          - { label: "Photo Alt Text", name: "photoAlt", widget: "string", required: false }
+
+  - name: "contact"
+    label: "Contact Page"
+    files:
+      - file: "src/content/contact/index.json"
+        label: "Contact Page Content"
+        name: "index"
+        fields:
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Subheading", name: "subheading", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Location", name: "location", widget: "string" }
+          - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+          - { label: "YouTube URL", name: "youtube", widget: "string", required: false }
+          - { label: "Behance URL", name: "behance", widget: "string", required: false }
+          - { label: "Portfolio Site URL (e.g. 500px)", name: "portfolioSite", widget: "string", required: false }
+
+  - name: "gallery"
+    label: "Gallery Photos"
+    folder: "src/content/gallery"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    summary: "{{title}} — {{category}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["portrait", "scenery", "food", "street", "travel"]
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Alt Text", name: "alt", widget: "string", required: false }
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Order (lower shows first)", name: "order", widget: "number", default: 0, required: false }

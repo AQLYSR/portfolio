@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Colors */
+  --cream: #f2ecdc;
+  --cream-soft: #f7f3e8;
+  --ink: #1a1a1a;
+  --blue: #1d3f91;
+  --blue-dark: #142c66;
+  --red: #d1332b;
+  --green: #1c7a43;
+  --yellow: #f0b429;
+
+  /* Type */
+  --font-display: 'Press Start 2P', system-ui, monospace;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+
+  /* Layout */
+  --max-width: 1180px;
+  --radius: 2px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  line-height: 1.4;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+/* Focus visibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* Dotted divider, used throughout the mockup as a decorative rule */
+.dotted {
+  border: none;
+  border-top: 3px dotted currentColor;
+  opacity: 0.55;
+}
+
+.dotted-v {
+  border: none;
+  border-left: 3px dotted currentColor;
+  opacity: 0.45;
+  height: 100%;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  padding: 16px 22px;
+  border-radius: var(--radius);
+  border: 3px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+}
+
+.btn-primary {
+  background: var(--red);
+  color: var(--cream-soft);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.btn-primary:hover {
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--blue);
+  border-color: var(--blue);
+  box-shadow: 4px 4px 0 var(--blue);
+}
+
+.btn-outline:hover {
+  box-shadow: 6px 6px 0 var(--blue);
+}
+
+.btn-yellow {
+  background: var(--yellow);
+  color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.btn-yellow:hover {
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.btn-green {
+  background: var(--green);
+  color: var(--cream-soft);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.btn-green:hover {
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+/* Paint splash decorations - blobby SVG-like shapes made with border-radius trickery */
+.splash {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(0.3px);
+}
+
+.splash-blue {
+  background: var(--blue);
+  border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
+}
+
+.splash-red {
+  background: var(--red);
+  border-radius: 45% 55% 40% 60% / 60% 40% 60% 40%;
+}
+
+.splash-green {
+  background: var(--green);
+  border-radius: 55% 45% 60% 40% / 40% 60% 40% 60%;
+}
+
+.splash-yellow {
+  background: var(--yellow);
+  border-radius: 50% 50% 40% 60% / 55% 45% 55% 45%;
+}
+
+/* Section container z-index above splashes */
+.content-layer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Pixel icon helper */
+.pixel-icon {
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+/* Corner bracket accent (yellow L-shape from the hero mockup) */
+.corner-bracket {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  border-top: 6px solid var(--yellow);
+  border-left: 6px solid var(--yellow);
+  z-index: 2;
+}
+
+/* Utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    padding: 0 20px;
+  }
+}

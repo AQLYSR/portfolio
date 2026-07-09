@@ -1,0 +1,8 @@
+{
+  "title": "Plated Dish",
+  "category": "food",
+  "image": "https://picsum.photos/seed/gal-food-2/500/500",
+  "alt": "Beautifully plated food dish",
+  "featured": false,
+  "order": 7
+}

@@ -1,0 +1,15 @@
+{
+  "heading": "Aqil Yusri",
+  "tagline": "Capturing moments. Telling stories.",
+  "description": "Portraits, places, flavors, and everything in between. Authentic moments, beautifully captured.",
+  "primaryButtonText": "View Gallery",
+  "primaryButtonLink": "/gallery",
+  "secondaryButtonText": "Let's Work Together",
+  "secondaryButtonLink": "/contact",
+  "heroImage": "https://picsum.photos/seed/aqil-hero-portrait/600/700",
+  "heroImageAlt": "Portrait photo sample",
+  "sideImageTop": "https://picsum.photos/seed/aqil-hero-scenery/500/300",
+  "sideImageTopAlt": "Mountain scenery photo sample",
+  "sideImageBottom": "https://picsum.photos/seed/aqil-hero-food/400/380",
+  "sideImageBottomAlt": "Food photography sample"
+}

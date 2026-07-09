@@ -1,0 +1,48 @@
+---
+import PixelIcon from './PixelIcon.astro';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>&copy; {year} Aqil Yusri. All rights reserved.</p>
+    <span class="dots" aria-hidden="true"></span>
+    <PixelIcon name="star" size={18} color="var(--yellow)" />
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--blue);
+    color: var(--cream-soft);
+    padding: 22px 0;
+    margin-top: 60px;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 0.85rem;
+  }
+
+  .dots {
+    flex: 1;
+    height: 0;
+    border-top: 3px dotted var(--cream-soft);
+    opacity: 0.5;
+    margin: 0 20px;
+  }
+
+  @media (max-width: 600px) {
+    .footer-inner {
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+    }
+    .dots {
+      display: none;
+    }
+  }
+</style>

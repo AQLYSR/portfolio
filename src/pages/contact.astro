@@ -1,0 +1,215 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PixelIcon from '../components/PixelIcon.astro';
+import { getEntry } from 'astro:content';
+
+const contact = await getEntry('contact', 'index');
+const d = contact.data;
+
+const socials = [
+  { icon: 'instagram', label: 'Instagram', href: d.instagram, color: 'var(--red)' },
+  { icon: 'youtube', label: 'YouTube', href: d.youtube, color: 'var(--green)' },
+  { icon: 'lens', label: 'Portfolio', href: d.portfolioSite, color: 'var(--yellow)' },
+  { icon: 'behance', label: 'Behance', href: d.behance, color: 'var(--blue)' },
+].filter((s) => s.href);
+---
+
+<Layout title="Contact" current="contact" description="Get in touch with Aqil Yusri for portrait, event, or lifestyle photography.">
+  <section class="contact-section">
+    <span class="splash splash-yellow" style="top:-10px; left:-70px; width:180px; height:180px;"></span>
+    <span class="splash splash-green" style="bottom:-60px; right:-60px; width:240px; height:200px;"></span>
+
+    <div class="wrap contact-inner content-layer">
+      <div class="section-heading">
+        <PixelIcon name="flag" size={24} color="var(--red)" />
+        <h1>Contact</h1>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h2>Have a project in mind?</h2>
+          <p class="lead">{d.subheading}</p>
+
+          <ul class="info-list">
+            <li>
+              <PixelIcon name="mail" size={18} color="var(--ink)" />
+              <a href={`mailto:${d.email}`}>{d.email}</a>
+            </li>
+            <li>
+              <PixelIcon name="phone" size={18} color="var(--ink)" />
+              <a href={`tel:${d.phone.replace(/\s|-/g, '')}`}>{d.phone}</a>
+            </li>
+            <li>
+              <PixelIcon name="pin" size={18} color="var(--ink)" />
+              <span>{d.location}</span>
+            </li>
+          </ul>
+
+          {socials.length > 0 && (
+            <div class="social-row">
+              {socials.map((s) => (
+                <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} style={`background:${s.color}`}>
+                  <PixelIcon name={s.icon} size={18} color="var(--cream-soft)" />
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="honeypot" aria-hidden="true">
+            <label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="name" class="sr-only">Name</label>
+              <input id="name" name="name" type="text" placeholder="Name" required />
+            </div>
+            <div class="field">
+              <label for="email" class="sr-only">Email</label>
+              <input id="email" name="email" type="email" placeholder="Email" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="subject" class="sr-only">Subject</label>
+            <input id="subject" name="subject" type="text" placeholder="Subject" required />
+          </div>
+
+          <div class="field">
+            <label for="message" class="sr-only">Message</label>
+            <textarea id="message" name="message" rows="6" placeholder="Message" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-green">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .contact-section {
+    position: relative;
+    overflow: hidden;
+    padding-top: 10px;
+    padding-bottom: 60px;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .section-heading h1 {
+    font-size: 1.6rem;
+    color: var(--red);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 60px;
+  }
+
+  .contact-info h2 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+
+  .lead {
+    color: #3a3a3a;
+    margin-bottom: 30px;
+    max-width: 34ch;
+  }
+
+  .info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .info-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+  }
+
+  .social-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .social-row a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--ink);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .field input,
+  textarea {
+    width: 100%;
+    border: 2px solid var(--ink);
+    background: var(--cream-soft);
+    padding: 14px 16px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--ink);
+    border-radius: var(--radius);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .contact-form .btn {
+    align-self: flex-start;
+    border: none;
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .field-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

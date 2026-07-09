@@ -1,0 +1,8 @@
+{
+  "title": "Palm Beach",
+  "category": "travel",
+  "image": "https://picsum.photos/seed/gal-travel-1/500/500",
+  "alt": "Palm tree on a tropical beach",
+  "featured": false,
+  "order": 6
+}

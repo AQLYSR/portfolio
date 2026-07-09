@@ -1,0 +1,8 @@
+{
+  "title": "Mountain Lake",
+  "category": "scenery",
+  "image": "https://picsum.photos/seed/gal-scenery-1/500/500",
+  "alt": "Mountain range with a lake",
+  "featured": true,
+  "order": 2
+}

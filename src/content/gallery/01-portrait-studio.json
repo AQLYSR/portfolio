@@ -1,0 +1,8 @@
+{
+  "title": "Studio Portrait",
+  "category": "portrait",
+  "image": "https://picsum.photos/seed/gal-portrait-1/500/500",
+  "alt": "Studio portrait of a young woman",
+  "featured": true,
+  "order": 1
+}

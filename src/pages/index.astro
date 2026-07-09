@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const home = await getEntry('home', 'index');
+const d = home.data;
+---
+
+<Layout title="Home" current="home">
+  <section class="hero">
+    <span class="splash splash-blue" style="top:-30px; right:-70px; width:280px; height:210px;"></span>
+    <span class="splash splash-green" style="bottom:-70px; left:-90px; width:260px; height:190px;"></span>
+    <span class="splash splash-red" style="bottom:-40px; right:-30px; width:220px; height:170px;"></span>
+
+    <div class="wrap hero-inner content-layer">
+      <div class="hero-text">
+        <span class="side-dots" aria-hidden="true"></span>
+        <h1>{d.heading}</h1>
+        <p class="tagline">{d.tagline}</p>
+        <p class="description">{d.description}</p>
+        <div class="hero-buttons">
+          <a href={d.primaryButtonLink} class="btn btn-primary">{d.primaryButtonText} →</a>
+          <a href={d.secondaryButtonLink} class="btn btn-outline">{d.secondaryButtonText} →</a>
+        </div>
+      </div>
+
+      <div class="hero-main">
+        <span class="corner-bracket" aria-hidden="true"></span>
+        <img src={d.heroImage} alt={d.heroImageAlt} width="600" height="700" />
+        <span class="dot-grid" aria-hidden="true"></span>
+      </div>
+
+      <div class="hero-side">
+        <img src={d.sideImageTop} alt={d.sideImageTopAlt} width="500" height="300" />
+        <img src={d.sideImageBottom} alt={d.sideImageBottomAlt} width="400" height="380" />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-top: 20px;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.05fr 0.85fr 0.55fr;
+    gap: 28px;
+    align-items: start;
+    padding-bottom: 90px;
+  }
+
+  .hero-text {
+    padding-top: 30px;
+    position: relative;
+  }
+
+  .side-dots {
+    position: absolute;
+    left: -32px;
+    top: 0;
+    bottom: 40px;
+    border-left: 3px dotted var(--blue);
+    opacity: 0.5;
+    display: none;
+  }
+
+  .hero-text h1 {
+    font-size: 2.6rem;
+    margin-bottom: 22px;
+    color: var(--ink);
+  }
+
+  .tagline {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--blue);
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  .description {
+    max-width: 40ch;
+    color: #3a3a3a;
+    margin-bottom: 30px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .hero-main {
+    position: relative;
+  }
+
+  .hero-main .corner-bracket {
+    top: -18px;
+    left: -18px;
+  }
+
+  .hero-main img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 6 / 7;
+    object-fit: cover;
+    border: 3px solid var(--ink);
+  }
+
+  .dot-grid {
+    position: absolute;
+    bottom: -22px;
+    left: 6px;
+    width: 60px;
+    height: 24px;
+    background-image: radial-gradient(var(--blue) 2px, transparent 2px);
+    background-size: 10px 10px;
+    opacity: 0.6;
+  }
+
+  .hero-side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 10px;
+  }
+
+  .hero-side img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border: 3px solid var(--ink);
+  }
+
+  .hero-side img:first-child {
+    aspect-ratio: 5 / 3;
+  }
+
+  .hero-side img:last-child {
+    aspect-ratio: 1 / 1;
+  }
+
+  @media (max-width: 980px) {
+    .hero-inner {
+      grid-template-columns: 1fr 1fr;
+    }
+    .hero-text {
+      grid-column: 1 / -1;
+      padding-top: 10px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+    .hero-text h1 {
+      font-size: 1.9rem;
+    }
+    .hero-main,
+    .hero-side {
+      grid-column: auto;
+    }
+  }
+</style>
