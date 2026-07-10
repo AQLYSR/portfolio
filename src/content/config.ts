@@ -96,4 +96,30 @@ const testimonials = defineCollection({
   }),
 });
 
-export const collections = { gallery, home, about, contact, howItWorks, pricing, testimonials };
+const terms = defineCollection({
+  type: 'data',
+  schema: z.object({
+    heading: z.string(),
+    body: z.string(),
+  }),
+});
+
+const privacy = defineCollection({
+  type: 'data',
+  schema: z.object({
+    heading: z.string(),
+    body: z.string(),
+  }),
+});
+
+export const collections = {
+  gallery,
+  home,
+  about,
+  contact,
+  howItWorks,
+  pricing,
+  testimonials,
+  terms,
+  privacy,
+};

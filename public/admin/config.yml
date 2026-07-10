@@ -127,3 +127,23 @@ collections:
       - { label: "Alt Text", name: "alt", widget: "string", required: false }
       - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false, required: false }
       - { label: "Order (lower shows first)", name: "order", widget: "number", default: 0, required: false }
+
+  - name: "terms"
+    label: "Terms & Conditions"
+    files:
+      - file: "src/content/terms/index.json"
+        label: "Terms & Conditions"
+        name: "index"
+        fields:
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "privacy"
+    label: "Privacy Policy"
+    files:
+      - file: "src/content/privacy/index.json"
+        label: "Privacy Policy"
+        name: "index"
+        fields:
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }

@@ -7,6 +7,10 @@ const year = new Date().getFullYear();
     <div class="wrap footer-inner">
         <p>&copy; {year} Aqil Yusri. All rights reserved.</p>
         <span class="dots" aria-hidden="true"></span>
+        <div class="footer-links">
+            <a href="/terms">Terms &amp; Conditions</a>
+            <a href="/privacy">Privacy Policy</a>
+        </div>
         <PixelIcon name="star" size={18} color="var(--yellow)" />
     </div>
 </footer>
@@ -16,7 +20,6 @@ const year = new Date().getFullYear();
         background: var(--blue);
         color: var(--cream-soft);
         padding: 22px 0;
-        margin-top: 60px;
     }
 
     .footer-inner {
@@ -25,6 +28,22 @@ const year = new Date().getFullYear();
         justify-content: space-between;
         gap: 16px;
         font-size: 0.85rem;
+    }
+
+    .footer-links {
+        display: flex;
+        gap: 20px;
+    }
+
+    .footer-links a {
+        color: var(--cream-soft);
+        text-decoration: none;
+        opacity: 0.85;
+        transition: opacity 0.2s;
+    }
+
+    .footer-links a:hover {
+        opacity: 1;
     }
 
     .dots {

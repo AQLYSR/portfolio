@@ -203,9 +203,11 @@ const whatsappLink = whatsapp
                                         <span class="price-value">
                                             {p.price}
                                         </span>
-                                        <span class="price-unit">
-                                            /{p.unit}
-                                        </span>
+                                        <div class="price-unit-box">
+                                            <span class="price-unit">
+                                                /{p.unit}
+                                            </span>
+                                        </div>
                                     </div>
                                     <ul class="pricing-features">
                                         {p.features.map((feat) => (
@@ -624,12 +626,12 @@ const whatsappLink = whatsapp
     .pricing-price {
         margin-bottom: 22px;
         display: flex;
-        align-items: baseline;
+        align-items: center;
         gap: 6px;
     }
     .price-value {
         font-family: var(--font-display);
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         color: var(--blue);
     }
     .pricing-card.highlighted .price-value {
@@ -638,6 +640,13 @@ const whatsappLink = whatsapp
     .price-unit {
         font-size: 0.85rem;
         opacity: 0.75;
+        display: flex;
+    }
+    .price-unit-box {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
     }
     .pricing-card.highlighted .price-unit {
         color: var(--cream-soft);
