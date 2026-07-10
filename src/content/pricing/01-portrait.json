@@ -1,0 +1,13 @@
+{
+  "name": "Portrait",
+  "price": "From RM150",
+  "unit": "per session",
+  "features": [
+    "1 hour session",
+    "15 edited photos",
+    "1 outfit change",
+    "Online gallery delivery"
+  ],
+  "highlighted": false,
+  "order": 1
+}

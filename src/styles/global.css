@@ -32,12 +32,19 @@ html {
 
 body {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
   background: var(--cream);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.6;
   overflow-x: hidden;
+}
+
+main {
+  flex: 1;
 }
 
 img {
@@ -160,6 +167,17 @@ textarea:focus-visible {
 
 .btn-green:hover {
   box-shadow: 6px 6px 0 var(--ink);
+}
+
+.btn-red {
+  background: red;
+  color: var(--red);
+  border-color: var(--red);
+  box-shadow: 4px 4px 0 var(--red);
+}
+
+.btn-red:hover {
+  box-shadow: 6px 6px 0 var(--red);
 }
 
 /* Paint splash decorations - blobby SVG-like shapes made with border-radius trickery */

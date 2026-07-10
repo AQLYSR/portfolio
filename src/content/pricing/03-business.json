@@ -1,0 +1,13 @@
+{
+  "name": "Business",
+  "price": "From RM400",
+  "unit": "per package",
+  "features": [
+    "Product or content shoot",
+    "Half-day session",
+    "Usage rights for marketing",
+    "Fast 48-hour turnaround"
+  ],
+  "highlighted": false,
+  "order": 3
+}

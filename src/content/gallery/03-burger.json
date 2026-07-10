@@ -3,6 +3,6 @@
   "category": "food",
   "image": "https://picsum.photos/seed/gal-food-1/500/500",
   "alt": "Close up of a loaded burger",
-  "featured": false,
-  "order": 3
+  "featured": true,
+    "order": 3
 }

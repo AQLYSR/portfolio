@@ -57,9 +57,57 @@ collections:
           - { label: "Phone", name: "phone", widget: "string" }
           - { label: "Location", name: "location", widget: "string" }
           - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+          - { label: "TikTok URL", name: "tiktok", widget: "string", required: false }
           - { label: "YouTube URL", name: "youtube", widget: "string", required: false }
-          - { label: "Behance URL", name: "behance", widget: "string", required: false }
-          - { label: "Portfolio Site URL (e.g. 500px)", name: "portfolioSite", widget: "string", required: false }
+          - { label: "WhatsApp Number (e.g. 60123456789)", name: "whatsapp", widget: "string", required: false }
+
+  - name: "how-it-works"
+    label: "How It Works"
+    folder: "src/content/howItWorks"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    summary: "Step {{stepNumber}}: {{title}}"
+    fields:
+      - { label: "Step Number", name: "stepNumber", widget: "number" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - label: "Icon"
+        name: "icon"
+        widget: "select"
+        options: ["camera", "mail", "phone", "pin", "suitcase", "mountain", "fork", "mushroom", "star", "flag", "heart", "lens", "instagram", "youtube", "behance", "grid"]
+
+  - name: "pricing"
+    label: "Pricing Packages"
+    folder: "src/content/pricing"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    summary: "{{name}} — {{price}}"
+    fields:
+      - { label: "Package Name", name: "name", widget: "string" }
+      - { label: "Price (e.g. From RM150)", name: "price", widget: "string" }
+      - { label: "Unit (e.g. per session)", name: "unit", widget: "string" }
+      - { label: "Features", name: "features", widget: "list", field: { label: "Feature", widget: "string" } }
+      - { label: "Highlight as Most Popular", name: "highlighted", widget: "boolean", default: false, required: false }
+      - { label: "Order", name: "order", widget: "number", default: 0, required: false }
+
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "src/content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    summary: "{{name}} — {{role}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role (e.g. Wedding Client)", name: "role", widget: "string" }
+      - { label: "Quote", name: "quote", widget: "text" }
+      - { label: "Photo", name: "photo", widget: "image", required: false }
+      - { label: "Order", name: "order", widget: "number", default: 0, required: false }
 
   - name: "gallery"
     label: "Gallery Photos"

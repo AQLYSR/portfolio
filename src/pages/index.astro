@@ -1,169 +1,774 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getEntry } from 'astro:content';
+import Layout from "../layouts/Layout.astro";
+import PixelIcon from "../components/PixelIcon.astro";
+import { getEntry, getCollection } from "astro:content";
 
-const home = await getEntry('home', 'index');
+const home = await getEntry("home", "index");
 const d = home.data;
+
+const gallery = await getCollection("gallery");
+const featuredPhotos = gallery
+    .filter((p) => p.data.featured)
+    .map((p) => p.data)
+    .sort((a, b) => a.order - b.order);
+
+const steps = (await getCollection("howItWorks")).sort(
+    (a, b) => a.data.stepNumber - b.data.stepNumber,
+);
+const packages = (await getCollection("pricing")).sort(
+    (a, b) => a.data.order - b.data.order,
+);
+const testimonials = (await getCollection("testimonials")).sort(
+    (a, b) => a.data.order - b.data.order,
+);
+
+const contact = await getEntry("contact", "index");
+const whatsapp = contact.data.whatsapp || "";
+const whatsappLink = whatsapp
+    ? `https://wa.me/${whatsapp}?text=Hi%20Aqil%2C%20I%27d%20like%20to%20book%20a%20shoot!`
+    : "/contact";
 ---
 
 <Layout title="Home" current="home">
-  <section class="hero">
-    <span class="splash splash-blue" style="top:-30px; right:-70px; width:280px; height:210px;"></span>
-    <span class="splash splash-green" style="bottom:-70px; left:-90px; width:260px; height:190px;"></span>
-    <span class="splash splash-red" style="bottom:-40px; right:-30px; width:220px; height:170px;"></span>
-
-    <div class="wrap hero-inner content-layer">
-      <div class="hero-text">
-        <span class="side-dots" aria-hidden="true"></span>
-        <h1>{d.heading}</h1>
-        <p class="tagline">{d.tagline}</p>
-        <p class="description">{d.description}</p>
-        <div class="hero-buttons">
-          <a href={d.primaryButtonLink} class="btn btn-primary">{d.primaryButtonText} →</a>
-          <a href={d.secondaryButtonLink} class="btn btn-outline">{d.secondaryButtonText} →</a>
+    <div class="home-sections">
+        <!-- Global splash layer — placed to flank key sections, never clipped -->
+        <div class="splash-layer" aria-hidden="true">
+            <!-- Hero zone -->
+            <span
+                class="splash splash-blue"
+                style="top:4%;   right:5%;  width:260px; height:200px;"></span>
+            <!-- Marquee zone -->
+            <span
+                class="splash splash-red"
+                style="top:43%;  left:2%;   width:190px; height:150px;"></span>
+            <!-- Steps zone -->
+            <span
+                class="splash splash-green"
+                style="top:62%;  right:3%;  width:220px; height:180px;"></span>
+            <!-- Pricing zone -->
+            <span
+                class="splash splash-blue"
+                style="top:74%;  left:4%;   width:200px; height:160px;"></span>
+            <!-- Testimonials zone -->
+            <span
+                class="splash splash-yellow"
+                style="top:82%;  right:4%;  width:180px; height:150px;"></span>
         </div>
-      </div>
 
-      <div class="hero-main">
-        <span class="corner-bracket" aria-hidden="true"></span>
-        <img src={d.heroImage} alt={d.heroImageAlt} width="600" height="700" />
-        <span class="dot-grid" aria-hidden="true"></span>
-      </div>
+        <!-- Hero -->
+        <section class="hero content-layer">
+            <div class="wrap hero-inner">
+                <div class="hero-text">
+                    <span class="side-dots" aria-hidden="true"></span>
+                    <h1>{d.heading}</h1>
+                    <p class="tagline">{d.tagline}</p>
+                    <p class="description">{d.description}</p>
+                    <div class="hero-buttons">
+                        <a href={d.primaryButtonLink} class="btn btn-primary"
+                            >{d.primaryButtonText} →</a
+                        >
+                        <a href={d.secondaryButtonLink} class="btn btn-outline"
+                            >{d.secondaryButtonText} →</a
+                        >
+                    </div>
+                </div>
 
-      <div class="hero-side">
-        <img src={d.sideImageTop} alt={d.sideImageTopAlt} width="500" height="300" />
-        <img src={d.sideImageBottom} alt={d.sideImageBottomAlt} width="400" height="380" />
-      </div>
+                <div class="hero-main">
+                    <span class="corner-bracket" aria-hidden="true"></span>
+                    <img
+                        src={d.heroImage}
+                        alt={d.heroImageAlt}
+                        width="600"
+                        height="700"
+                    />
+                    <span class="dot-grid" aria-hidden="true"></span>
+                </div>
+
+                <div class="hero-side">
+                    <img
+                        src={d.sideImageTop}
+                        alt={d.sideImageTopAlt}
+                        width="500"
+                        height="300"
+                    />
+                    <img
+                        src={d.sideImageBottom}
+                        alt={d.sideImageBottomAlt}
+                        width="400"
+                        height="380"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Marquee -->
+        <section class="marquee-section content-layer">
+            <div class="wrap">
+                <div class="section-heading">
+                    <PixelIcon name="camera" size={24} color="var(--blue)" />
+                    <h2>Recent Work</h2>
+                </div>
+            </div>
+
+            <div class="marquee">
+                <div class="marquee-track">
+                    {
+                        featuredPhotos.map((photo) => (
+                            <div class="marquee-card">
+                                <img
+                                    src={photo.image}
+                                    alt={photo.alt || photo.title}
+                                    width="500"
+                                    height="500"
+                                    loading="lazy"
+                                />
+                                <span class="marquee-label">{photo.title}</span>
+                            </div>
+                        ))
+                    }
+                    <!-- Duplicate for seamless loop -->
+                    {
+                        featuredPhotos.map((photo) => (
+                            <div class="marquee-card">
+                                <img
+                                    src={photo.image}
+                                    alt={photo.alt || photo.title}
+                                    width="500"
+                                    height="500"
+                                    loading="lazy"
+                                />
+                                <span class="marquee-label">{photo.title}</span>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="steps-section content-layer">
+            <div class="wrap">
+                <div class="section-heading">
+                    <PixelIcon name="star" size={24} color="var(--green)" />
+                    <h2>How It Works</h2>
+                </div>
+
+                <div class="steps-grid">
+                    {
+                        steps.map((step) => {
+                            const s = step.data;
+                            return (
+                                <div class="step-card">
+                                    <div class="step-badge">
+                                        {String(s.stepNumber).padStart(2, "0")}
+                                    </div>
+                                    <PixelIcon
+                                        name={s.icon}
+                                        size={32}
+                                        color="var(--ink)"
+                                    />
+                                    <h3>{s.title}</h3>
+                                    <p>{s.description}</p>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section class="pricing-section content-layer">
+            <div class="wrap">
+                <div class="section-heading">
+                    <PixelIcon name="suitcase" size={24} color="var(--red)" />
+                    <h2>Pricing Packages</h2>
+                </div>
+
+                <div class="pricing-grid">
+                    {
+                        packages.map((pkg) => {
+                            const p = pkg.data;
+                            return (
+                                <div
+                                    class={`pricing-card${p.highlighted ? " highlighted" : ""}`}
+                                >
+                                    {p.highlighted && (
+                                        <span class="popular-badge">
+                                            Most Popular
+                                        </span>
+                                    )}
+                                    <h3>{p.name}</h3>
+                                    <div class="pricing-price">
+                                        <span class="price-value">
+                                            {p.price}
+                                        </span>
+                                        <span class="price-unit">
+                                            /{p.unit}
+                                        </span>
+                                    </div>
+                                    <ul class="pricing-features">
+                                        {p.features.map((feat) => (
+                                            <li>
+                                                <PixelIcon
+                                                    name="heart"
+                                                    size={14}
+                                                    color="var(--yellow)"
+                                                />
+                                                <span>{feat}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <a
+                                        href="/contact"
+                                        class={`btn${p.highlighted ? " btn-yellow" : " btn-outline"}`}
+                                    >
+                                        Get Started →
+                                    </a>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials-section content-layer">
+            <div class="wrap">
+                <div class="section-heading">
+                    <PixelIcon name="heart" size={24} color="var(--yellow)" />
+                    <h2>What Clients Say</h2>
+                </div>
+
+                <div class="testimonials-grid">
+                    {
+                        testimonials.map((t) => {
+                            const td = t.data;
+                            return (
+                                <div class="testimonial-card">
+                                    <div
+                                        class="testimonial-mark"
+                                        aria-hidden="true"
+                                    >
+                                        <PixelIcon
+                                            name="star"
+                                            size={28}
+                                            color="var(--yellow)"
+                                        />
+                                    </div>
+                                    {td.photo && (
+                                        <div class="testimonial-photo">
+                                            <img
+                                                src={td.photo}
+                                                alt={td.name}
+                                                width="80"
+                                                height="80"
+                                                loading="lazy"
+                                            />
+                                        </div>
+                                    )}
+                                    <blockquote>{td.quote}</blockquote>
+                                    <div class="testimonial-author">
+                                        <strong>{td.name}</strong>
+                                        <span>{td.role}</span>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- Book Now CTA — flows directly into the footer -->
+        <section class="cta-section content-layer">
+            <div class="wrap">
+                <h2>Ready to book your session?</h2>
+                <p>
+                    Let's create something beautiful together. Reach out and
+                    we'll get started.
+                </p>
+                <a
+                    href={whatsappLink}
+                    class="btn btn-green"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Book Now on WhatsApp →
+                </a>
+            </div>
+        </section>
     </div>
-  </section>
 </Layout>
 
 <style>
-  .hero {
-    position: relative;
-    overflow: hidden;
-    padding-top: 20px;
-  }
-
-  .hero-inner {
-    display: grid;
-    grid-template-columns: 1.05fr 0.85fr 0.55fr;
-    gap: 28px;
-    align-items: start;
-    padding-bottom: 90px;
-  }
-
-  .hero-text {
-    padding-top: 30px;
-    position: relative;
-  }
-
-  .side-dots {
-    position: absolute;
-    left: -32px;
-    top: 0;
-    bottom: 40px;
-    border-left: 3px dotted var(--blue);
-    opacity: 0.5;
-    display: none;
-  }
-
-  .hero-text h1 {
-    font-size: 2.6rem;
-    margin-bottom: 22px;
-    color: var(--ink);
-  }
-
-  .tagline {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    color: var(--blue);
-    line-height: 1.6;
-    margin-bottom: 18px;
-  }
-
-  .description {
-    max-width: 40ch;
-    color: #3a3a3a;
-    margin-bottom: 30px;
-  }
-
-  .hero-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .hero-main {
-    position: relative;
-  }
-
-  .hero-main .corner-bracket {
-    top: -18px;
-    left: -18px;
-  }
-
-  .hero-main img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 6 / 7;
-    object-fit: cover;
-    border: 3px solid var(--ink);
-  }
-
-  .dot-grid {
-    position: absolute;
-    bottom: -22px;
-    left: 6px;
-    width: 60px;
-    height: 24px;
-    background-image: radial-gradient(var(--blue) 2px, transparent 2px);
-    background-size: 10px 10px;
-    opacity: 0.6;
-  }
-
-  .hero-side {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding-top: 10px;
-  }
-
-  .hero-side img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border: 3px solid var(--ink);
-  }
-
-  .hero-side img:first-child {
-    aspect-ratio: 5 / 3;
-  }
-
-  .hero-side img:last-child {
-    aspect-ratio: 1 / 1;
-  }
-
-  @media (max-width: 980px) {
-    .hero-inner {
-      grid-template-columns: 1fr 1fr;
+    /* ---- Wrapper: no clipping, lets blobs breathe ---- */
+    .home-sections {
+        position: relative;
+        overflow: visible;
     }
+
+    .splash-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: visible;
+    }
+
+    /* ---- Hero ---- */
+    .hero {
+        position: relative;
+        padding-top: 20px;
+    }
+
+    .hero-inner {
+        display: grid;
+        grid-template-columns: 1.05fr 0.85fr 0.55fr;
+        gap: 28px;
+        align-items: start;
+        padding-bottom: 90px;
+    }
+
     .hero-text {
-      grid-column: 1 / -1;
-      padding-top: 10px;
+        padding-top: 30px;
+        position: relative;
     }
-  }
 
-  @media (max-width: 640px) {
-    .hero-inner {
-      grid-template-columns: 1fr;
+    .side-dots {
+        position: absolute;
+        left: -32px;
+        top: 0;
+        bottom: 40px;
+        border-left: 3px dotted var(--blue);
+        opacity: 0.5;
+        display: none;
     }
+
     .hero-text h1 {
-      font-size: 1.9rem;
+        font-size: 2.6rem;
+        margin-bottom: 22px;
+        color: var(--ink);
     }
-    .hero-main,
+
+    .tagline {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        color: var(--blue);
+        line-height: 1.6;
+        margin-bottom: 18px;
+    }
+
+    .description {
+        max-width: 40ch;
+        color: #3a3a3a;
+        margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .hero-main {
+        position: relative;
+    }
+
+    .hero-main .corner-bracket {
+        top: -18px;
+        left: -18px;
+    }
+
+    .hero-main img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 6 / 7;
+        object-fit: cover;
+        border: 3px solid var(--ink);
+    }
+
+    .dot-grid {
+        position: absolute;
+        bottom: -22px;
+        left: 6px;
+        width: 60px;
+        height: 24px;
+        background-image: radial-gradient(var(--blue) 2px, transparent 2px);
+        background-size: 10px 10px;
+        opacity: 0.6;
+    }
+
     .hero-side {
-      grid-column: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 10px;
     }
-  }
+
+    .hero-side img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border: 3px solid var(--ink);
+    }
+
+    .hero-side img:first-child {
+        aspect-ratio: 5 / 3;
+    }
+    .hero-side img:last-child {
+        aspect-ratio: 1 / 1;
+    }
+
+    @media (max-width: 980px) {
+        .hero-inner {
+            grid-template-columns: 1fr 1fr;
+        }
+        .hero-text {
+            grid-column: 1 / -1;
+            padding-top: 10px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .hero-inner {
+            grid-template-columns: 1fr;
+        }
+        .hero-text h1 {
+            font-size: 1.9rem;
+        }
+        .hero-main,
+        .hero-side {
+            grid-column: auto;
+        }
+    }
+
+    /* ---- Shared section heading ---- */
+    .section-heading {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 36px;
+    }
+    .section-heading h2 {
+        font-size: 1.6rem;
+    }
+
+    /* ---- Gallery Marquee ---- */
+    .marquee-section {
+        padding: 50px 0 70px;
+    }
+    .marquee-section .section-heading h2 {
+        color: var(--blue);
+    }
+
+    .marquee {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .marquee-track {
+        display: flex;
+        gap: 20px;
+        width: max-content;
+        animation: marquee-scroll 50s linear infinite;
+    }
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    @keyframes marquee-scroll {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
+    }
+
+    .marquee-card {
+        flex-shrink: 0;
+        width: 300px;
+        aspect-ratio: 3 / 2;
+        position: relative;
+        border: 3px solid var(--ink);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--ink);
+    }
+
+    .marquee-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .marquee-label {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 10px 14px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    /* ---- How It Works ---- */
+    .steps-section {
+        padding: 30px 0 60px;
+    }
+    .steps-section .section-heading h2 {
+        color: var(--green);
+    }
+
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .step-card {
+        text-align: center;
+        padding: 32px 20px 28px;
+        border: 3px solid var(--ink);
+        background: var(--cream-soft);
+    }
+
+    .step-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        border: 3px solid var(--ink);
+        background: var(--green);
+        color: var(--cream-soft);
+        font-family: var(--font-display);
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+    }
+
+    .step-card h3 {
+        font-size: 0.75rem;
+        margin: 12px 0 10px;
+        color: var(--ink);
+    }
+    .step-card p {
+        color: #3a3a3a;
+        font-size: 0.9rem;
+        max-width: 32ch;
+        margin: 0 auto;
+    }
+
+    /* ---- Pricing ---- */
+    .pricing-section {
+        padding: 30px 0 60px;
+    }
+    .pricing-section .section-heading h2 {
+        color: var(--red);
+    }
+
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        align-items: stretch;
+    }
+
+    .pricing-card {
+        border: 3px solid var(--ink);
+        background: var(--cream-soft);
+        padding: 32px 24px 28px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        transition: transform 0.2s ease;
+    }
+
+    .pricing-card.highlighted {
+        border-color: var(--green);
+        background: var(--green);
+        color: var(--cream-soft);
+        transform: scale(1.04);
+        box-shadow: 6px 6px 0 var(--ink);
+    }
+
+    .popular-badge {
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--yellow);
+        color: var(--ink);
+        font-family: var(--font-display);
+        font-size: 0.55rem;
+        padding: 6px 16px;
+        border: 3px solid var(--ink);
+        white-space: nowrap;
+    }
+
+    .pricing-card h3 {
+        font-size: 0.75rem;
+        margin-bottom: 14px;
+    }
+    .pricing-card.highlighted h3 {
+        color: var(--cream-soft);
+    }
+
+    .pricing-price {
+        margin-bottom: 22px;
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+    }
+    .price-value {
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        color: var(--blue);
+    }
+    .pricing-card.highlighted .price-value {
+        color: var(--yellow);
+    }
+    .price-unit {
+        font-size: 0.85rem;
+        opacity: 0.75;
+    }
+    .pricing-card.highlighted .price-unit {
+        color: var(--cream-soft);
+    }
+
+    .pricing-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        text-align: left;
+    }
+
+    .pricing-features li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.88rem;
+    }
+    .pricing-card .btn {
+        margin-top: auto;
+    }
+
+    /* ---- Testimonials ---- */
+    .testimonials-section {
+        padding: 30px 0 60px;
+    }
+    .testimonials-section .section-heading h2 {
+        color: var(--yellow);
+    }
+
+    .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    .testimonial-card {
+        border: 3px solid var(--ink);
+        background: var(--cream-soft);
+        padding: 28px 22px 24px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .testimonial-mark {
+        margin-bottom: 12px;
+    }
+    .testimonial-photo {
+        margin-bottom: 14px;
+    }
+
+    .testimonial-photo img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--ink);
+    }
+
+    .testimonial-card blockquote {
+        margin: 0 0 18px;
+        font-size: 0.92rem;
+        color: #3a3a3a;
+        line-height: 1.65;
+        flex: 1;
+    }
+    .testimonial-author strong {
+        display: block;
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+    }
+    .testimonial-author span {
+        font-size: 0.8rem;
+        color: #555;
+    }
+
+    /* ---- Book Now CTA — zero bottom padding to connect with the footer ---- */
+    .cta-section {
+        background: var(--blue);
+        color: var(--cream-soft);
+        padding: 60px 0 0;
+        text-align: center;
+    }
+
+    .cta-section h2 {
+        font-size: 1.4rem;
+        margin-bottom: 14px;
+    }
+    .cta-section p {
+        max-width: 46ch;
+        margin: 0 auto 28px;
+        font-size: 1rem;
+        opacity: 0.92;
+    }
+    .cta-section .btn-green {
+        font-size: 0.8rem;
+        padding: 18px 28px;
+        margin-bottom: 60px;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 800px) {
+        .steps-grid,
+        .pricing-grid,
+        .testimonials-grid {
+            grid-template-columns: 1fr;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .pricing-card.highlighted {
+            transform: none;
+        }
+        .cta-section h2 {
+            font-size: 1.1rem;
+        }
+        .marquee-card {
+            width: 240px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .section-heading h2 {
+            font-size: 1.2rem;
+        }
+        .marquee-card {
+            width: 200px;
+        }
+    }
 </style>

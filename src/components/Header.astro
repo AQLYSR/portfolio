@@ -1,178 +1,196 @@
 ---
-import PixelIcon from './PixelIcon.astro';
+import PixelIcon from "./PixelIcon.astro";
 
-const { current = 'home' } = Astro.props as { current?: 'home' | 'gallery' | 'about' | 'contact' };
+const { current = "home" } = Astro.props as {
+    current?: "home" | "gallery" | "about" | "contact";
+};
 
 const links = [
-  { key: 'home', label: 'Home', href: '/' },
-  { key: 'gallery', label: 'Gallery', href: '/gallery' },
-  { key: 'about', label: 'About Me', href: '/about' },
-  { key: 'contact', label: 'Contact', href: '/contact' },
+    { key: "home", label: "Home", href: "/" },
+    { key: "gallery", label: "Gallery", href: "/gallery" },
+    { key: "about", label: "About Me", href: "/about" },
+    { key: "contact", label: "Contact", href: "/contact" },
 ];
 ---
 
 <header class="site-header">
-  <div class="wrap header-inner">
-    <a href="/" class="logo">
-      <PixelIcon name="mushroom" size={28} color="var(--red)" />
-      <span>Aqil Yusri</span>
-    </a>
+    <div class="wrap header-inner">
+        <a href="/" class="logo">
+            <PixelIcon name="mushroom" size={28} color="var(--red)" />
+            <span>Aqil Yusri</span>
+        </a>
 
-    <nav class="site-nav" aria-label="Primary">
-      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" id="nav-toggle">
-        <span></span><span></span><span></span>
-        <span class="sr-only">Toggle menu</span>
-      </button>
-      <ul id="nav-menu">
-        {links.map((l) => (
-          <li>
-            <a href={l.href} class={current === l.key ? 'active' : ''}>{l.label}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+        <nav class="site-nav" aria-label="Primary">
+            <button
+                class="nav-toggle"
+                aria-expanded="false"
+                aria-controls="nav-menu"
+                id="nav-toggle"
+            >
+                <span></span><span></span><span></span>
+                <span class="sr-only">Toggle menu</span>
+            </button>
+            <ul id="nav-menu">
+                {
+                    links.map((l) => (
+                        <li>
+                            <a
+                                href={l.href}
+                                class={current === l.key ? "active" : ""}
+                            >
+                                {l.label}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </nav>
 
-    <div class="header-deco" aria-hidden="true">
-      <span class="dots"></span>
-      <span class="mushroom-badge">
-        <PixelIcon name="mushroom" size={20} color="var(--cream-soft)" />
-      </span>
+        <div class="header-deco" aria-hidden="true">
+            <span class="dots"></span>
+            <span class="mushroom-badge">
+                <PixelIcon
+                    name="mushroom"
+                    size={20}
+                    color="var(--cream-soft)"
+                />
+            </span>
+        </div>
     </div>
-  </div>
 </header>
 
 <style>
-  .site-header {
-    padding: 26px 0;
-    position: relative;
-    z-index: 20;
-  }
-
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-display);
-    font-size: 1rem;
-    color: var(--ink);
-    flex-shrink: 0;
-  }
-
-  .site-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 28px;
-    margin: 0;
-    padding: 0;
-  }
-
-  .site-nav a {
-    font-family: var(--font-display);
-    font-size: 0.7rem;
-    letter-spacing: 0.5px;
-    color: var(--ink);
-    padding-bottom: 8px;
-    border-bottom: 3px solid transparent;
-  }
-
-  .site-nav a:hover {
-    color: var(--red);
-  }
-
-  .site-nav a.active {
-    color: var(--red);
-    border-bottom-color: var(--red);
-  }
-
-  .header-deco {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-shrink: 0;
-  }
-
-  .dots {
-    width: 90px;
-    height: 0;
-    border-top: 3px dotted var(--ink);
-    opacity: 0.5;
-    display: inline-block;
-  }
-
-  .mushroom-badge {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: var(--green);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .nav-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    padding: 8px;
-  }
-
-  .nav-toggle span {
-    width: 24px;
-    height: 3px;
-    background: var(--ink);
-    display: block;
-  }
-
-  @media (max-width: 800px) {
-    .header-deco {
-      display: none;
+    .site-header {
+        padding-top: 26px;
+        position: relative;
+        z-index: 20;
     }
-  }
 
-  @media (max-width: 700px) {
-    .nav-toggle {
-      display: flex;
+    .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-display);
+        font-size: 1rem;
+        color: var(--ink);
+        flex-shrink: 0;
     }
 
     .site-nav ul {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: var(--cream-soft);
-      flex-direction: column;
-      gap: 0;
-      padding: 8px 20px 20px;
-      border-bottom: 3px solid var(--ink);
-      display: none;
-    }
-
-    .site-nav ul.open {
-      display: flex;
+        list-style: none;
+        display: flex;
+        gap: 28px;
+        margin: 0;
+        padding: 0;
     }
 
     .site-nav a {
-      display: block;
-      padding: 12px 0;
-      border-bottom: 1px dotted rgba(26, 26, 26, 0.2);
+        font-family: var(--font-display);
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+        color: var(--ink);
+        padding-bottom: 8px;
+        border-bottom: 3px solid transparent;
     }
-  }
+
+    .site-nav a:hover {
+        color: var(--red);
+    }
+
+    .site-nav a.active {
+        color: var(--red);
+        border-bottom-color: var(--red);
+    }
+
+    .header-deco {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-shrink: 0;
+    }
+
+    .dots {
+        width: 90px;
+        height: 0;
+        border-top: 3px dotted var(--ink);
+        opacity: 0.5;
+        display: inline-block;
+    }
+
+    .mushroom-badge {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        padding: 8px;
+    }
+
+    .nav-toggle span {
+        width: 24px;
+        height: 3px;
+        background: var(--ink);
+        display: block;
+    }
+
+    @media (max-width: 800px) {
+        .header-deco {
+            display: none;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .nav-toggle {
+            display: flex;
+        }
+
+        .site-nav ul {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--cream-soft);
+            flex-direction: column;
+            gap: 0;
+            padding: 8px 20px 20px;
+            border-bottom: 3px solid var(--ink);
+            display: none;
+        }
+
+        .site-nav ul.open {
+            display: flex;
+        }
+
+        .site-nav a {
+            display: block;
+            padding: 12px 0;
+            border-bottom: 1px dotted rgba(26, 26, 26, 0.2);
+        }
+    }
 </style>
 
 <script>
-  const toggle = document.getElementById('nav-toggle');
-  const menu = document.getElementById('nav-menu');
-  toggle?.addEventListener('click', () => {
-    const isOpen = menu?.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(!!isOpen));
-  });
+    const toggle = document.getElementById("nav-toggle");
+    const menu = document.getElementById("nav-menu");
+    toggle?.addEventListener("click", () => {
+        const isOpen = menu?.classList.toggle("open");
+        toggle.setAttribute("aria-expanded", String(!!isOpen));
+    });
 </script>

@@ -1,145 +1,187 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import PixelIcon from '../components/PixelIcon.astro';
-import { getEntry } from 'astro:content';
+import Layout from "../layouts/Layout.astro";
+import PixelIcon from "../components/PixelIcon.astro";
+import { getEntry } from "astro:content";
 
-const about = await getEntry('about', 'index');
+const about = await getEntry("about", "index");
 const d = about.data;
 
 const categories = [
-  { icon: 'camera', label: 'Portrait', color: 'var(--green)' },
-  { icon: 'mountain', label: 'Scenery', color: 'var(--blue)' },
-  { icon: 'fork', label: 'Food', color: 'var(--red)' },
-  { icon: 'suitcase', label: 'Travel', color: 'var(--yellow)' },
+    { icon: "camera", label: "Portrait", color: "var(--green)" },
+    { icon: "mountain", label: "Scenery", color: "var(--blue)" },
+    { icon: "fork", label: "Food", color: "var(--red)" },
+    { icon: "suitcase", label: "Travel", color: "var(--yellow)" },
 ];
 ---
 
-<Layout title="About Me" current="about" description="Learn more about Aqil Yusri, a photographer based in Malaysia.">
-  <section class="about-section">
-    <span class="splash splash-blue" style="top:40px; right:-60px; width:180px; height:220px;"></span>
-    <span class="splash splash-blue" style="bottom:-30px; left:40%; width:200px; height:120px;"></span>
-
-    <div class="wrap about-inner content-layer">
-      <div class="section-heading">
-        <PixelIcon name="star" size={24} color="var(--yellow)" />
-        <h1>About Me</h1>
-      </div>
-
-      <div class="about-grid">
-        <div class="about-text">
-          <h2>{d.intro}</h2>
-          <p>{d.paragraph1}</p>
-          <p>{d.paragraph2}</p>
-          <a href="/gallery" class="btn btn-outline">{d.buttonText}</a>
-
-          <div class="categories">
-            {categories.map((c) => (
-              <div class="category">
-                <span class="category-icon" style={`background:${c.color}`}>
-                  <PixelIcon name={c.icon} size={20} color="var(--cream-soft)" />
-                </span>
-                <span>{c.label}</span>
-              </div>
-            ))}
-          </div>
+<Layout
+    title="About Me"
+    current="about"
+    description="Learn more about Aqil Yusri, a photographer based in Malaysia."
+>
+    <div class="about-wrapper">
+        <div class="splash-layer" aria-hidden="true">
+            <span
+                class="splash splash-blue"
+                style="top:6%;  right:5%; width:180px; height:220px;"></span>
+            <span
+                class="splash splash-green"
+                style="top:79%; left:3%;  width:210px; height:160px;"></span>
+            <span
+                class="splash splash-yellow"
+                style="top:80%; right:4%; width:170px; height:140px;"></span>
         </div>
 
-        <div class="about-photo">
-          <img src={d.photo} alt={d.photoAlt} width="560" height="680" />
-        </div>
-      </div>
+        <section class="about-section content-layer">
+            <div class="wrap about-inner">
+                <div class="section-heading">
+                    <PixelIcon name="star" size={24} color="var(--yellow)" />
+                    <h1>About Me</h1>
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h2>{d.intro}</h2>
+                        <p>{d.paragraph1}</p>
+                        <p>{d.paragraph2}</p>
+                        <a href="/gallery" class="btn btn-outline"
+                            >{d.buttonText}</a
+                        >
+
+                        <div class="categories">
+                            {
+                                categories.map((c) => (
+                                    <div class="category">
+                                        <span
+                                            class="category-icon"
+                                            style={`background:${c.color}`}
+                                        >
+                                            <PixelIcon
+                                                name={c.icon}
+                                                size={20}
+                                                color="var(--cream-soft)"
+                                            />
+                                        </span>
+                                        <span>{c.label}</span>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+
+                    <div class="about-photo">
+                        <img
+                            src={d.photo}
+                            alt={d.photoAlt}
+                            width="560"
+                            height="680"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-  </section>
 </Layout>
 
 <style>
-  .about-section {
-    position: relative;
-    overflow: hidden;
-    padding-top: 10px;
-    padding-bottom: 60px;
-  }
+    .about-wrapper {
+        position: relative;
+        overflow: visible;
+    }
 
-  .section-heading {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 36px;
-  }
+    .splash-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: visible;
+    }
 
-  .section-heading h1 {
-    font-size: 1.6rem;
-    color: var(--green);
-  }
+    .about-section {
+        padding-top: 20px;
+        padding-bottom: 60px;
+    }
 
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 0.75fr;
-    gap: 50px;
-    align-items: center;
-  }
+    .section-heading {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 36px;
+    }
 
-  .about-text h2 {
-    font-size: 1.5rem;
-    margin-bottom: 22px;
-  }
+    .section-heading h1 {
+        font-size: 1.6rem;
+        color: var(--green);
+    }
 
-  .about-text p {
-    max-width: 46ch;
-    color: #3a3a3a;
-    margin-bottom: 16px;
-  }
-
-  .about-text .btn {
-    margin-top: 8px;
-  }
-
-  .categories {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 26px;
-    margin-top: 42px;
-  }
-
-  .category {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-  }
-
-  .category-icon {
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid var(--ink);
-  }
-
-  .about-photo {
-    position: relative;
-  }
-
-  .about-photo img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    border: 3px solid var(--ink);
-  }
-
-  @media (max-width: 900px) {
     .about-grid {
-      grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: 1fr 0.75fr;
+        gap: 50px;
+        align-items: center;
     }
+
+    .about-text h2 {
+        font-size: 1.5rem;
+        margin-bottom: 22px;
+    }
+
+    .about-text p {
+        max-width: 46ch;
+        color: #3a3a3a;
+        margin-bottom: 16px;
+    }
+
+    .about-text .btn {
+        margin-top: 8px;
+    }
+
+    .categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 26px;
+        margin-top: 42px;
+    }
+
+    .category {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .category-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid var(--ink);
+    }
+
     .about-photo {
-      order: -1;
-      max-width: 420px;
-      margin: 0 auto;
+        position: relative;
     }
-  }
+
+    .about-photo img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        border: 3px solid var(--ink);
+    }
+
+    @media (max-width: 900px) {
+        .about-grid {
+            grid-template-columns: 1fr;
+        }
+        .about-photo {
+            order: -1;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+    }
 </style>

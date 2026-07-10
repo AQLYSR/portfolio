@@ -53,10 +53,47 @@ const contact = defineCollection({
     phone: z.string(),
     location: z.string(),
     instagram: z.string().optional().default(''),
+    tiktok: z.string().optional().default(''),
     youtube: z.string().optional().default(''),
-    behance: z.string().optional().default(''),
-    portfolioSite: z.string().optional().default(''),
+    whatsapp: z.string().optional().default(''),
   }),
 });
 
-export const collections = { gallery, home, about, contact };
+const howItWorks = defineCollection({
+  type: 'data',
+  schema: z.object({
+    stepNumber: z.number(),
+    title: z.string(),
+    description: z.string(),
+    icon: z.enum([
+      'camera', 'mail', 'phone', 'pin', 'suitcase', 'mountain',
+      'fork', 'mushroom', 'star', 'flag', 'heart', 'lens',
+      'instagram', 'youtube', 'behance', 'grid',
+    ]),
+  }),
+});
+
+const pricing = defineCollection({
+  type: 'data',
+  schema: z.object({
+    name: z.string(),
+    price: z.string(),
+    unit: z.string(),
+    features: z.array(z.string()),
+    highlighted: z.boolean().optional().default(false),
+    order: z.number().optional().default(0),
+  }),
+});
+
+const testimonials = defineCollection({
+  type: 'data',
+  schema: z.object({
+    name: z.string(),
+    role: z.string(),
+    quote: z.string(),
+    photo: z.string().optional(),
+    order: z.number().optional().default(0),
+  }),
+});
+
+export const collections = { gallery, home, about, contact, howItWorks, pricing, testimonials };
